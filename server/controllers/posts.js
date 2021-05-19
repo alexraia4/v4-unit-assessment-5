@@ -2,7 +2,9 @@ module.exports = {
     readPosts: async (req, res) => {
       let { id } = req.session.user;
       let { mine, search, oldest } = req.query;
-      const db = await req.app.get('db')
+      const db = await req.app.get('db');
+      
+      
       if (mine && !search) {
         if (oldest) {
           db.post.read_all_oldest_first()
@@ -35,7 +37,8 @@ module.exports = {
           db.post.read_other_users_posts([id])
             .then(posts => res.status(200).send(posts))
         }
-      }
+      } 
+      
     },
     createPost: (req, res) => {
       //code here
