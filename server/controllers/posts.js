@@ -40,8 +40,21 @@ module.exports = {
       } 
       
     },
-    createPost: (req, res) => {
-      //code here
+    createPost: async(req, res) => {
+
+
+
+      if(!req.session.user){
+        return res.status(403).send('Login required');
+      }
+      
+      const db = await req.app.get('db');
+
+      
+      const result = await db.post.create_post(req.session.user.id, req.body.title, req.body.img, req.body.content);
+      
+      return res.status(201).send('post created');
+
     },
     readPost: (req, res) => {
       req.app.get('db').post.read_post(req.params.id)

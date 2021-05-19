@@ -17,7 +17,7 @@ module.exports = {
 
         const registeredUser = await db.user.create_user([username, hash, `https://robohash.org/${username}.png`]);
         const user = registeredUser[0];
-        req.session.user = {username: user.username, profile_pic: user.profile_pic};
+        req.session.user = {id:user.id, username: user.username, profile_pic: user.profile_pic};
         return res.status(201).send(req.session.user);
     },
 
@@ -38,7 +38,7 @@ module.exports = {
           return res.status(403).send('wrong password bro');
         }
 
-        req.session.user = {username: user.username, profile_pic: user.profile_pic};
+        req.session.user = {id: user.id, username: user.username, profile_pic: user.profile_pic};
         return res.status(201).send(req.session.user);
     },
 
